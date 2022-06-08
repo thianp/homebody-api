@@ -6,9 +6,11 @@ const { sequelize } = require("./models/index");
 
 const authRouter = require("./routes/authRoute");
 const userRouter = require("./routes/userRoute");
+const cartRouter = require("./routes/cartRoute");
+const orderRouter = require("./routes/orderRoute");
 const notFoundMiddleware = require("./middlewares/notFound");
 const errorMiddleware = require("./middlewares/error");
-const authenticate = require('./middlewares/authenticate')
+const authenticate = require("./middlewares/authenticate");
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
 app.use("/users", authenticate, userRouter);
+app.use("/cartitems", authenticate, cartRouter);
+app.use("/orders", authenticate, orderRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

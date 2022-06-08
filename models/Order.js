@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
             notEmpty: true,
           },
         },
-        date: DataTypes.DATEONLY,
       },
       {
         underscored: true,
