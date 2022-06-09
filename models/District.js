@@ -2,6 +2,13 @@ module.exports = (sequelize, DataTypes) => {
   const District = sequelize.define(
     "District",
     {
+      zipCode: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
       nameTh: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,23 +39,15 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
     });
 
-    District.hasMany(models.Amphoe, {
+    District.belongsTo(models.Amphure, {
       foreignKey: {
         allowNull: false,
-        name: "districtId",
+        name: "amphureId",
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
 
-    District.belongsTo(models.Province, {
-      foreignKey: {
-        allowNull: false,
-        name: "provinceId",
-      },
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
   };
 
   return District;

@@ -60,10 +60,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.belongsTo(models.Amphoe, {
+    User.belongsTo(models.Amphure, {
       foreignKey: {
         allowNull: false,
-        name: "amphoeId",
+        name: "amphureId",
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",

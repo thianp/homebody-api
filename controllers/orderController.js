@@ -48,9 +48,31 @@ exports.submitOrder = async (req, res, next) => {
   }
 };
 
-exports.getOrders = async (req, res, next) => {
+exports.getUserOrders = async (req, res, next) => {
   try {
-    const orders = await Order.findAll({ where: { userId: req.user.id } });
+    const orders = await Order.findAll({
+      where: { userId: req.user.id },
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: ["password"],
+          },
+        },
+        {
+          model: OrderItem,
+        },
+      ],
+    });
+    res.json({ orders });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getAllOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.findAll();
     res.json({ orders });
   } catch (err) {
     next(err);

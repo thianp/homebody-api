@@ -23,7 +23,6 @@ exports.signup = async (req, res, next) => {
       provinceId,
       postalCode,
     } = req.body;
-    console.log(req.body);
 
     const isPhoneNumber = validator.isMobilePhone(phoneNumber + "");
     if (!isPhoneNumber) {
@@ -50,7 +49,6 @@ exports.signup = async (req, res, next) => {
     });
 
     const token = genToken({ id: user.id });
-    console.log(token);
     res.status(201).json({ token });
   } catch (err) {
     next(err);
@@ -77,7 +75,7 @@ exports.login = async (req, res, next) => {
       createError("invalid credential", 400);
     }
 
-    const token = genToken({ id: user.id });
+    const token = genToken({ id: user.id, isAdmin: false });
     res.json({ token });
   } catch (err) {
     next(err);
