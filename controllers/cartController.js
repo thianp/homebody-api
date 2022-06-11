@@ -11,6 +11,7 @@ exports.addCartItem = async (req, res, next) => {
         productId,
       },
     });
+    
     if (!cartItem) {
       cartItem = await CartItem.create({
         productId,

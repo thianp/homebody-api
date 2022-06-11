@@ -6,6 +6,7 @@ const {
   OrderItem,
   sequelize,
 } = require("../models");
+const createError = require("../middlewares/error");
 
 exports.submitOrder = async (req, res, next) => {
   try {
@@ -32,13 +33,23 @@ exports.submitOrder = async (req, res, next) => {
       const order = await Order.create({ userId: req.user.id, total });
 
       cartItems.map(async (item) => {
-        await OrderItem.create({
-          orderId: order.id,
-          productId: item.productId,
-          quantity: item.quantity,
-          price: item.Product.price,
-        });
-        await CartItem.destroy({ where: { id: item.id } });
+        // const { inventory } = await Product.findOne({
+        //   where: {
+        //     id: item.productId,
+        //   },
+        // });
+
+        // if (inventory >= item.quantity) {
+          await OrderItem.create({
+            orderId: order.id,
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.Product.price,
+          });
+          await CartItem.destroy({ where: { id: item.id } });
+      //   } else {
+      //     createError("not enough inventory", 502);
+      //   }
       });
 
       res.status(201).json({ order });

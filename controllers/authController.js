@@ -18,7 +18,7 @@ exports.signup = async (req, res, next) => {
       email,
       password,
       addressLine1,
-      amphoeId,
+      amphureId,
       districtId,
       provinceId,
       postalCode,
@@ -42,13 +42,13 @@ exports.signup = async (req, res, next) => {
       email,
       password: hashedPassword,
       addressLine1,
-      amphoeId,
+      amphureId,
       districtId,
       provinceId,
       postalCode,
     });
 
-    const token = genToken({ id: user.id });
+    const token = genToken({ id: user.id, isAdmin: false });
     res.status(201).json({ token });
   } catch (err) {
     next(err);
